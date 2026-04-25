@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 function Test-Winget {
     $cmd = Get-Command winget -ErrorAction SilentlyContinue
@@ -25,7 +25,7 @@ function Ensure-Winget {
     Start-Sleep -Seconds 2
 
     if (-not (Test-Winget)) {
-        throw "WinGet could not be installed automatically. Install Microsoft App Installer manually, then rerun this installer."
+        throw "WinGet could not be installed automatically. Install Microsoft App Installer manually, then rerun this launcher."
     }
 }
 
@@ -91,4 +91,4 @@ if (-not $ahkExe) {
 
 $scriptPath = Join-Path $projectRoot "Emoji machine gun (Zoom).ahk"
 Start-Process -FilePath $ahkExe -ArgumentList @($scriptPath)
-Write-Host "Launching installer script. It will copy itself into Zoom on first run."
+Write-Host "Launching main script. It will copy itself into Zoom on first run."

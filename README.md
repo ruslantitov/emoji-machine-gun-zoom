@@ -21,14 +21,14 @@ Quick start:
 - Zoom desktop app
 - AutoHotkey v2
 
-`install.ps1` сам проверяет наличие `winget`. Если `winget` отсутствует, он сначала пытается поднять Microsoft App Installer, а потом ставит `AutoHotkey v2`.
+`scripts/bootstrap.ps1` сам проверяет наличие `winget`. Если `winget` отсутствует, он сначала пытается поднять Microsoft App Installer, а потом ставит `AutoHotkey v2`.
 
 ### Установка
 1. Скачайте релиз ZIP.
-2. Запустите `install.cmd`.
+2. Запустите `START_HERE.cmd`.
 3. Скрипт сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует, затем запустит `.ahk`.
 4. На первом запуске `.ahk` сам скопирует себя в папку Zoom и добавит автозапуск в `Startup`.
-5. Если Windows скрывает расширения, файл может отображаться как просто `install`.
+5. Если Windows скрывает расширения, файл может отображаться как просто `START_HERE`.
 
 ### Как это работает
 Скрипт активирует окно Zoom и отправляет его штатные сочетания:
@@ -55,14 +55,14 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 - Zoom desktop app
 - AutoHotkey v2
 
-`install.ps1` checks for `winget` first. If `winget` is missing, it tries to install Microsoft App Installer and then installs `AutoHotkey v2`.
+`scripts/bootstrap.ps1` checks for `winget` first. If `winget` is missing, it tries to install Microsoft App Installer and then installs `AutoHotkey v2`.
 
 ### Install
 1. Download the ZIP release.
-2. Run `install.cmd`.
+2. Run `START_HERE.cmd`.
 3. The installer checks `winget`, installs `AutoHotkey v2` if needed, and then launches the `.ahk` file.
 4. On first run, the `.ahk` file copies itself into the Zoom folder and adds startup support.
-5. If Windows hides file extensions, the file may appear as just `install`.
+5. If Windows hides file extensions, the file may appear as just `START_HERE`.
 
 ### How it works
 The script activates the Zoom window and sends built-in Zoom shortcuts:
@@ -76,9 +76,9 @@ Zoom docs:
 
 ## Repo
 - `Emoji machine gun (Zoom).ahk` - main script
-- `install.ps1` - install into Zoom folder + startup
+- `scripts/bootstrap.ps1` - launcher that installs prerequisites and starts the main script
 - `uninstall.ps1` - remove startup and files
-- `install.cmd` - one-click installer
+- `START_HERE.cmd` - one-click installer
 - `uninstall.cmd` - one-click removal
 - `LICENSE` - project license
 - `QUICK_START.md` - minimal install instructions
