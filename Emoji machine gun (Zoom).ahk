@@ -12,6 +12,10 @@
 ;
 ; This version uses only Zoom built-in shortcuts and a hold loop.
 
+global installedScriptPath := A_AppData "\Zoom\bin\Emoji machine gun (Zoom).ahk"
+global installedCmdPath := A_AppData "\Zoom\bin\Emoji machine gun (Zoom).cmd"
+global startupCmdPath := A_AppData "\Microsoft\Windows\Start Menu\Programs\Startup\Emoji machine gun (Zoom).cmd"
+
 global activeKey := ""
 global activeReaction := ""
 global fireDelayMs := 70
@@ -24,6 +28,8 @@ global reactionHotkeys := Map(
     "tada", "{Alt down}{Shift down}{vk39}{Shift up}{Alt up}"
 )
 
+EnsureSelfInstalled()
+
 $F5::StartReaction("F5", "mix", "Смешанный режим")
 $F6::StartReaction("F6", "clap", "Аплодисменты")
 $F7::StartReaction("F7", "thumbs", "Лайки")
@@ -35,6 +41,33 @@ $F6 Up::StopReaction("F6")
 $F7 Up::StopReaction("F7")
 $F8 Up::StopReaction("F8")
 $F9 Up::StopReaction("F9")
+
+EnsureSelfInstalled() {
+    global installedScriptPath, installedCmdPath, startupCmdPath
+
+    currentPath := StrLower(A_ScriptFullPath)
+    targetPath := StrLower(installedScriptPath)
+
+    if currentPath = targetPath {
+        return
+    }
+
+    FileCreateDir(A_AppData "\Zoom\bin")
+    FileCopy(A_ScriptFullPath, installedScriptPath, 1)
+
+    cmdText := Format('@echo off`nstart "" "{1}"`n', installedScriptPath)
+    if FileExist(installedCmdPath)
+        FileDelete(installedCmdPath)
+    FileAppend(cmdText, installedCmdPath, "UTF-8")
+
+    FileCreateDir(A_AppData "\Microsoft\Windows\Start Menu\Programs\Startup")
+    if FileExist(startupCmdPath)
+        FileDelete(startupCmdPath)
+    FileCopy(installedCmdPath, startupCmdPath, 1)
+
+    Run(Format('"{1}" "{2}"', A_AhkPath, installedScriptPath))
+    ExitApp
+}
 
 StartReaction(keyName, reactionName, tooltipText) {
     global activeKey, activeReaction

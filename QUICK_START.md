@@ -9,8 +9,9 @@ Windows only.
 4. Открой папку с файлами
 5. Дважды нажми файл `install.cmd` в корне папки
 6. Если Windows скрывает расширения, файл может выглядеть просто как `install`
-7. Дождись окончания установки
-8. Открой Zoom и пользуйся:
+7. Дождись окончания запуска
+8. На первом запуске программа сама сохранит себя в папку Zoom и включит автозапуск
+9. Открой Zoom и пользуйся:
    - `F5` - `heart -> thumbs up -> clap`
    - `F6` - `clap`
    - `F7` - `thumbs up`
@@ -24,8 +25,9 @@ Windows only.
 4. Open the extracted folder
 5. Double-click `install.cmd` in the root of the folder
 6. If Windows hides file extensions, it may appear as just `install`
-7. Wait for the installer to finish
-8. Open Zoom and use the hotkeys:
+7. Wait for the launcher to start
+8. On first run, the program copies itself into the Zoom folder and enables startup
+9. Open Zoom and use the hotkeys:
    - `F5` - `heart -> thumbs up -> clap`
    - `F6` - `clap`
    - `F7` - `thumbs up`
