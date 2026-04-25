@@ -21,7 +21,7 @@ Quick start:
 - Zoom desktop app
 - AutoHotkey v2
 
-`scripts/bootstrap.ps1` сам проверяет наличие `winget`. Если `winget` отсутствует, он сначала пытается поднять Microsoft App Installer, а потом ставит `AutoHotkey v2`.
+`bootstrap.ps1` сам проверяет наличие `winget`. Если `winget` отсутствует, он сначала пытается поднять Microsoft App Installer, а потом ставит `AutoHotkey v2`.
 
 ### Установка
 1. Скачайте релиз ZIP.
@@ -56,7 +56,7 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 - Zoom desktop app
 - AutoHotkey v2
 
-`scripts/bootstrap.ps1` checks for `winget` first. If `winget` is missing, it tries to install Microsoft App Installer and then installs `AutoHotkey v2`.
+`bootstrap.ps1` checks for `winget` first. If `winget` is missing, it tries to install Microsoft App Installer and then installs `AutoHotkey v2`.
 
 ### Install
 1. Download the ZIP release.
@@ -78,7 +78,7 @@ Zoom docs:
 
 ## Repo
 - `Emoji machine gun (Zoom).ahk` - main script
-- `scripts/bootstrap.ps1` - launcher that installs prerequisites and starts the main script
+- `bootstrap.ps1` - launcher that installs prerequisites and starts the main script
 - `uninstall.ps1` - remove startup and files
 - `START.cmd` - one-click installer
 - `uninstall.cmd` - one-click removal

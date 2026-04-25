@@ -1,7 +1,7 @@
 @echo off
 title Emoji machine gun (Zoom) setup
 echo Starting installer...
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\bootstrap.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0bootstrap.ps1"
 if errorlevel 1 (
   echo.
   echo Launch failed. See the error message above.

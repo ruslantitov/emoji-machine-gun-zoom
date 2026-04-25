@@ -27,7 +27,7 @@ jobs:
             "QUICK_START.md",
             "LICENSE",
             "START.cmd",
-            "scripts/bootstrap.ps1",
+            "bootstrap.ps1",
             "uninstall.cmd",
             "uninstall.ps1"
           )
