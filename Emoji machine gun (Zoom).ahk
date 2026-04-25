@@ -74,7 +74,7 @@ EnsureSelfInstalled() {
 WatchZoomLifecycle() {
     global zoomSeen
 
-    if IsZoomRunning() {
+    if HasZoomWindow() {
         zoomSeen := true
         return
     }
@@ -161,14 +161,7 @@ SendZoomReaction(reactionName) {
 }
 
 ActivateZoomWindow() {
-    if !IsZoomRunning() {
-        return false
-    }
-
-    zoomHwnd := WinExist("ahk_exe Zoom.exe")
-    if !zoomHwnd {
-        zoomHwnd := WinExist("ahk_exe Zoom Workplace.exe")
-    }
+    zoomHwnd := GetZoomWindow()
     if !zoomHwnd {
         return false
     }
@@ -177,6 +170,19 @@ ActivateZoomWindow() {
     WinWaitActive(zoomHwnd, , 0.5)
     Sleep(30)
     return true
+}
+
+HasZoomWindow() {
+    return !!GetZoomWindow()
+}
+
+GetZoomWindow() {
+    zoomHwnd := WinExist("ahk_exe Zoom.exe")
+    if !zoomHwnd {
+        zoomHwnd := WinExist("ahk_exe Zoom Workplace.exe")
+    }
+
+    return zoomHwnd
 }
 
 IsZoomRunning() {
