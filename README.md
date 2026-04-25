@@ -1,5 +1,9 @@
 # Emoji machine gun (Zoom)
 
+Quick start:
+- [QUICK_START.md](QUICK_START.md)
+- Release page: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
+
 ## RU
 Минимальный AutoHotkey v2-скрипт для Zoom. Он использует только штатные горячие клавиши Zoom и работает без привязки к координатам экрана.
 

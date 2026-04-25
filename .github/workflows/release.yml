@@ -24,6 +24,7 @@ jobs:
           $files = @(
             "Emoji machine gun (Zoom).ahk",
             "README.md",
+            "QUICK_START.md",
             "LICENSE",
             "install.cmd",
             "install.ps1",
@@ -36,4 +37,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
+          body: |
+            Download the ZIP asset, extract it, and run `install.cmd`.
+            The installer will check `winget`, install AutoHotkey v2 if needed, and enable startup.
           generate_release_notes: true
