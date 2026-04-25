@@ -30,42 +30,28 @@ function Ensure-Winget {
 }
 
 function Test-AutoHotkeyV2 {
-    $candidates = @(
-        (Get-Command AutoHotkey.exe -ErrorAction SilentlyContinue).Source
-        (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey64.exe")
-        (Join-Path $env:ProgramFiles "AutoHotkey\AutoHotkey.exe")
-        (Join-Path ${env:ProgramFiles(x86)} "AutoHotkey\v2\AutoHotkey32.exe")
-        (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\AutoHotkey.exe")
-    ) | Where-Object { $_ }
-
-    foreach ($path in $candidates) {
-        if (Test-Path $path) {
-            try {
-                $version = [version](Get-Item $path).VersionInfo.ProductVersion
-                if ($version.Major -ge 2) {
-                    return $true
-                }
-            } catch {
-                continue
-            }
-        }
-    }
-
-    return $false
+    return $null -ne (Get-AutoHotkeyV2Path)
 }
 
 function Get-AutoHotkeyV2Path {
     $candidates = @(
         (Get-Command AutoHotkey.exe -ErrorAction SilentlyContinue).Source
+        (Get-Command AutoHotkeyUX.exe -ErrorAction SilentlyContinue).Source
         (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey64.exe")
+        (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey.exe")
         (Join-Path $env:ProgramFiles "AutoHotkey\AutoHotkey.exe")
+        (Join-Path $env:ProgramFiles "AutoHotkey\UX\AutoHotkeyUX.exe")
         (Join-Path ${env:ProgramFiles(x86)} "AutoHotkey\v2\AutoHotkey32.exe")
+        (Join-Path ${env:ProgramFiles(x86)} "AutoHotkey\v2\AutoHotkey.exe")
+        (Join-Path ${env:ProgramFiles(x86)} "AutoHotkey\UX\AutoHotkeyUX.exe")
         (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\v2\AutoHotkey64.exe")
         (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\v2\AutoHotkey32.exe")
+        (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\v2\AutoHotkey.exe")
         (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\AutoHotkey.exe")
+        (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\UX\AutoHotkeyUX.exe")
     ) | Where-Object { $_ }
 
-    foreach ($path in $candidates) {
+    foreach ($path in ($candidates | Select-Object -Unique)) {
         if (Test-Path $path) {
             return $path
         }
@@ -78,13 +64,23 @@ function Install-AutoHotkeyV2 {
     Ensure-Winget
     Write-Host "AutoHotkey v2 not found. Installing it now..."
     winget install --id AutoHotkey.AutoHotkey --exact --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
+
+    $ahkExe = Get-AutoHotkeyV2Path
+    if ($ahkExe) {
+        return $ahkExe
+    }
+
+    Write-Host "AutoHotkey package is registered but the executable was not found. Repairing with winget..."
+    winget repair --id AutoHotkey.AutoHotkey --exact --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
+
+    return Get-AutoHotkeyV2Path
 }
 
 if (-not (Test-AutoHotkeyV2)) {
-    Install-AutoHotkeyV2
+    $installedAhkExe = Install-AutoHotkeyV2
 }
 
-$ahkExe = Get-AutoHotkeyV2Path
+$ahkExe = if ($installedAhkExe) { $installedAhkExe } else { Get-AutoHotkeyV2Path }
 if (-not $ahkExe) {
     throw "AutoHotkey v2 could not be found after installation."
 }
