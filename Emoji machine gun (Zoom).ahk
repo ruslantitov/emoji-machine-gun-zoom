@@ -20,6 +20,7 @@ global activeKey := ""
 global activeReaction := ""
 global fireDelayMs := 70
 global mixIndex := 0
+global zoomSeen := false
 
 global reactionHotkeys := Map(
     "clap", "{Alt down}{Shift down}{vk34}{Shift up}{Alt up}",
@@ -29,6 +30,7 @@ global reactionHotkeys := Map(
 )
 
 EnsureSelfInstalled()
+SetTimer(WatchZoomLifecycle, 1000)
 
 $F5::StartReaction("F5", "mix", "Смешанный режим")
 $F6::StartReaction("F6", "clap", "Аплодисменты")
@@ -67,6 +69,19 @@ EnsureSelfInstalled() {
 
     Run(Format('"{1}" "{2}"', A_AhkPath, installedScriptPath))
     ExitApp
+}
+
+WatchZoomLifecycle() {
+    global zoomSeen
+
+    if IsZoomRunning() {
+        zoomSeen := true
+        return
+    }
+
+    if zoomSeen {
+        ExitApp
+    }
 }
 
 StartReaction(keyName, reactionName, tooltipText) {
@@ -146,6 +161,10 @@ SendZoomReaction(reactionName) {
 }
 
 ActivateZoomWindow() {
+    if !IsZoomRunning() {
+        return false
+    }
+
     zoomHwnd := WinExist("ahk_exe Zoom.exe")
     if !zoomHwnd {
         zoomHwnd := WinExist("ahk_exe Zoom Workplace.exe")
@@ -158,4 +177,8 @@ ActivateZoomWindow() {
     WinWaitActive(zoomHwnd, , 0.5)
     Sleep(30)
     return true
+}
+
+IsZoomRunning() {
+    return ProcessExist("Zoom.exe") || ProcessExist("Zoom Workplace.exe")
 }

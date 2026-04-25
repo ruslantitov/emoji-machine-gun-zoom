@@ -91,9 +91,4 @@ if (-not $ahkExe) {
 
 $scriptPath = Join-Path $projectRoot "Emoji machine gun (Zoom).ahk"
 Start-Process -FilePath $ahkExe -WorkingDirectory $projectRoot -ArgumentList @("`"$scriptPath`"")
-
-Add-Type -AssemblyName PresentationFramework
-[System.Windows.MessageBox]::Show(
-    "Emoji machine gun is running. Look for the tray icon, then open Zoom and use F5-F9.",
-    "Emoji machine gun (Zoom)"
-) | Out-Null
+Write-Host "Emoji machine gun is launching. It will stay available while Zoom is running."

@@ -39,5 +39,5 @@ jobs:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
             Download the ZIP asset, extract it, and run `START.cmd`.
-            The installer will check `winget`, install AutoHotkey v2 if needed, and enable startup.
+            The installer will check `winget`, install AutoHotkey v2 if needed, enable startup, and stay in the tray while Zoom is running.
           generate_release_notes: true

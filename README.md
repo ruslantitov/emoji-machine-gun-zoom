@@ -27,9 +27,10 @@ Quick start:
 1. Скачайте релиз ZIP.
 2. Запустите `START.cmd`.
 3. Скрипт сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует, затем запустит `.ahk`.
-4. После запуска появится короткое окно подтверждения, а сам скрипт будет работать в трее.
-5. На первом запуске `.ahk` сам скопирует себя в папку Zoom и добавит автозапуск в `Startup`.
-6. Если Windows скрывает расширения, файл может отображаться как просто `START`.
+4. Скрипт остается в трее и ждет Zoom.
+5. Когда Zoom закрывается, скрипт тоже закрывается.
+6. На первом запуске `.ahk` сам скопирует себя в папку Zoom и добавит автозапуск в `Startup`.
+7. Если Windows скрывает расширения, файл может отображаться как просто `START`.
 
 ### Как это работает
 Скрипт активирует окно Zoom и отправляет его штатные сочетания:
@@ -62,9 +63,10 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 1. Download the ZIP release.
 2. Run `START.cmd`.
 3. The installer checks `winget`, installs `AutoHotkey v2` if needed, and then launches the `.ahk` file.
-4. After launch, a short confirmation popup appears, and the script runs in the tray.
-5. On first run, the `.ahk` file copies itself into the Zoom folder and adds startup support.
-6. If Windows hides file extensions, the file may appear as just `START`.
+4. The script stays in the tray and waits for Zoom.
+5. When Zoom closes, the script exits too.
+6. On first run, the `.ahk` file copies itself into the Zoom folder and adds startup support.
+7. If Windows hides file extensions, the file may appear as just `START`.
 
 ### How it works
 The script activates the Zoom window and sends built-in Zoom shortcuts:
