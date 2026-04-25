@@ -30,20 +30,32 @@ function Ensure-Winget {
 }
 
 function Test-AutoHotkeyV2 {
-    $candidates = @(
-        (Get-Command AutoHotkey.exe -ErrorAction SilentlyContinue).Source
-        (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey64.exe")
-        (Join-Path $env:ProgramFiles "AutoHotkey\AutoHotkey.exe")
-        (Join-Path ${env:ProgramFiles(x86)} "AutoHotkey\v2\AutoHotkey32.exe")
-        (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\AutoHotkey.exe")
-    ) | Where-Object { $_ }
+    return $null -ne (Get-AutoHotkeyV2Path)
+}
 
-    foreach ($path in $candidates) {
-        if (Test-Path $path) {
+function Get-AutoHotkeyRegistryLocations {
+    $paths = @()
+    $registryRoots = @(
+        "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
+        "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+    )
+
+    foreach ($root in $registryRoots) {
+        if (-not (Test-Path $root)) {
+            continue
+        }
+
+        Get-ChildItem $root -ErrorAction SilentlyContinue | ForEach-Object {
             try {
-                $version = [version](Get-Item $path).VersionInfo.ProductVersion
-                if ($version.Major -ge 2) {
-                    return $true
+                $item = Get-ItemProperty $_.PSPath -ErrorAction Stop
+                if ($item.DisplayName -and $item.DisplayName -like "AutoHotkey*") {
+                    if ($item.InstallLocation) {
+                        $paths += $item.InstallLocation
+                    }
+                    if ($item.DisplayIcon) {
+                        $paths += (Split-Path $item.DisplayIcon -Parent)
+                    }
                 }
             } catch {
                 continue
@@ -51,7 +63,7 @@ function Test-AutoHotkeyV2 {
         }
     }
 
-    return $false
+    return $paths | Where-Object { $_ } | Select-Object -Unique
 }
 
 function Get-AutoHotkeyV2Path {
@@ -64,6 +76,18 @@ function Get-AutoHotkeyV2Path {
         (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\v2\AutoHotkey32.exe")
         (Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\AutoHotkey.exe")
     ) | Where-Object { $_ }
+
+    foreach ($installLocation in Get-AutoHotkeyRegistryLocations) {
+        $candidates += @(
+            (Join-Path $installLocation "AutoHotkey64.exe")
+            (Join-Path $installLocation "AutoHotkey32.exe")
+            (Join-Path $installLocation "AutoHotkey.exe")
+            (Join-Path $installLocation "v2\AutoHotkey64.exe")
+            (Join-Path $installLocation "v2\AutoHotkey32.exe")
+            (Join-Path $installLocation "v2\AutoHotkey.exe")
+            (Join-Path $installLocation "UX\AutoHotkey64.exe")
+        )
+    }
 
     foreach ($path in $candidates) {
         if (Test-Path $path) {
