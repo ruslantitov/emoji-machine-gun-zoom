@@ -1,5 +1,7 @@
 # Emoji machine gun (Zoom)
 
+Windows only.
+
 Quick start:
 - [QUICK_START.md](QUICK_START.md)
 - Release page: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest

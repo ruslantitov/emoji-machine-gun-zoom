@@ -1,5 +1,7 @@
 # Quick Start / Быстрый старт
 
+Windows only.
+
 ## RU
 1. Открой страницу релиза: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
 2. Скачай файл `emoji-machine-gun-zoom-v1.0.x.zip`
