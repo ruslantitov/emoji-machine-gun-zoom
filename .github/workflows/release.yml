@@ -26,7 +26,7 @@ jobs:
             "README.md",
             "QUICK_START.md",
             "LICENSE",
-            "START_HERE.cmd",
+            "START.cmd",
             "scripts/bootstrap.ps1",
             "uninstall.cmd",
             "uninstall.ps1"
@@ -38,6 +38,6 @@ jobs:
         with:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
-            Download the ZIP asset, extract it, and run `START_HERE.cmd`.
+            Download the ZIP asset, extract it, and run `START.cmd`.
             The installer will check `winget`, install AutoHotkey v2 if needed, and enable startup.
           generate_release_notes: true

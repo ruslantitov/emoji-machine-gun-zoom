@@ -7,8 +7,8 @@ Windows only.
 2. Скачай файл `emoji-machine-gun-zoom-v1.0.x.zip`
 3. Распакуй ZIP
 4. Открой папку с файлами
-5. Дважды нажми файл `START_HERE.cmd` в корне папки
-6. Если Windows скрывает расширения, файл может выглядеть просто как `START_HERE`
+5. Дважды нажми файл `START.cmd` в корне папки
+6. Если Windows скрывает расширения, файл может выглядеть просто как `START`
 7. Дождись появления окна подтверждения
 8. Закрой его, если оно появилось
 9. На первом запуске программа сама сохранит себя в папку Zoom и включит автозапуск
@@ -24,8 +24,8 @@ Windows only.
 2. Download `emoji-machine-gun-zoom-v1.0.x.zip`
 3. Unzip the archive
 4. Open the extracted folder
-5. Double-click `START_HERE.cmd` in the root of the folder
-6. If Windows hides file extensions, it may appear as just `START_HERE`
+5. Double-click `START.cmd` in the root of the folder
+6. If Windows hides file extensions, it may appear as just `START`
 7. Wait for the confirmation popup
 8. Close it if it appears
 9. On first run, the program copies itself into the Zoom folder and enables startup
