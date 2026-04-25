@@ -54,7 +54,7 @@ EnsureSelfInstalled() {
         return
     }
 
-    FileCreateDir(A_AppData "\Zoom\bin")
+    DirCreate(A_AppData "\Zoom\bin")
     FileCopy(A_ScriptFullPath, installedScriptPath, 1)
 
     cmdText := Format('@echo off`nstart "" "{1}"`n', installedScriptPath)
@@ -62,7 +62,7 @@ EnsureSelfInstalled() {
         FileDelete(installedCmdPath)
     FileAppend(cmdText, installedCmdPath, "UTF-8")
 
-    FileCreateDir(A_AppData "\Microsoft\Windows\Start Menu\Programs\Startup")
+    DirCreate(A_AppData "\Microsoft\Windows\Start Menu\Programs\Startup")
     if FileExist(startupCmdPath)
         FileDelete(startupCmdPath)
     FileCopy(installedCmdPath, startupCmdPath, 1)
