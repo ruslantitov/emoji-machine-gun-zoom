@@ -71,5 +71,6 @@ Zoom docs:
 - `install.cmd` - one-click installer
 - `uninstall.cmd` - one-click removal
 - `LICENSE` - project license
+- `QUICK_START.md` - minimal install instructions
 
 The release ZIP is built automatically by GitHub Actions on tags like `v1.0.0`.
