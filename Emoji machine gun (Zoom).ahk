@@ -177,14 +177,25 @@ HasZoomWindow() {
 }
 
 GetZoomWindow() {
-    zoomHwnd := WinExist("ahk_exe Zoom.exe")
-    if !zoomHwnd {
-        zoomHwnd := WinExist("ahk_exe Zoom Workplace.exe")
+    for hwnd in WinGetList("ahk_exe Zoom.exe") {
+        if IsVisibleWindow(hwnd) {
+            return hwnd
+        }
     }
 
-    return zoomHwnd
+    for hwnd in WinGetList("ahk_exe Zoom Workplace.exe") {
+        if IsVisibleWindow(hwnd) {
+            return hwnd
+        }
+    }
+
+    return 0
 }
 
 IsZoomRunning() {
     return ProcessExist("Zoom.exe") || ProcessExist("Zoom Workplace.exe")
+}
+
+IsVisibleWindow(hwnd) {
+    return (WinGetStyle("ahk_id " hwnd) & 0x10000000) != 0
 }
