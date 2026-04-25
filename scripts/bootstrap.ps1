@@ -35,8 +35,8 @@ function Test-AutoHotkeyV2 {
 
 function Get-AutoHotkeyV2Path {
     $candidates = @(
-        (Get-Command AutoHotkey.exe -ErrorAction SilentlyContinue).Source
-        (Get-Command AutoHotkeyUX.exe -ErrorAction SilentlyContinue).Source
+        (Get-Command AutoHotkey.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source)
+        (Get-Command AutoHotkeyUX.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source)
         (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey64.exe")
         (Join-Path $env:ProgramFiles "AutoHotkey\v2\AutoHotkey.exe")
         (Join-Path $env:ProgramFiles "AutoHotkey\AutoHotkey.exe")
@@ -53,7 +53,7 @@ function Get-AutoHotkeyV2Path {
 
     foreach ($path in ($candidates | Select-Object -Unique)) {
         if (Test-Path $path) {
-            return $path
+            return [string]$path
         }
     }
 
@@ -80,7 +80,7 @@ if (-not (Test-AutoHotkeyV2)) {
     $installedAhkExe = Install-AutoHotkeyV2
 }
 
-$ahkExe = if ($installedAhkExe) { $installedAhkExe } else { Get-AutoHotkeyV2Path }
+$ahkExe = if ($installedAhkExe) { [string]$installedAhkExe } else { [string](Get-AutoHotkeyV2Path) }
 if (-not $ahkExe) {
     throw "AutoHotkey v2 could not be found after installation."
 }
