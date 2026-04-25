@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$projectRoot = Split-Path -Parent $PSScriptRoot
+$projectRoot = $PSScriptRoot
 
 function Test-Winget {
     $cmd = Get-Command winget -ErrorAction SilentlyContinue
@@ -90,7 +90,7 @@ if (-not $ahkExe) {
 }
 
 $scriptPath = Join-Path $projectRoot "Emoji machine gun (Zoom).ahk"
-Start-Process -FilePath $ahkExe -ArgumentList @($scriptPath)
+Start-Process -FilePath $ahkExe -WorkingDirectory $projectRoot -ArgumentList @("`"$scriptPath`"")
 
 Add-Type -AssemblyName PresentationFramework
 [System.Windows.MessageBox]::Show(
