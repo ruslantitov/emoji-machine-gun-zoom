@@ -27,6 +27,7 @@ Quick start:
 1. Скачайте релиз ZIP.
 2. Запустите `install.cmd`.
 3. Скрипт сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует, затем скопирует файлы в папку Zoom и добавит автозапуск в `Startup`.
+4. Если Windows скрывает расширения, файл может отображаться как просто `install`.
 
 ### Как это работает
 Скрипт активирует окно Zoom и отправляет его штатные сочетания:
@@ -59,6 +60,7 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 1. Download the ZIP release.
 2. Run `install.cmd`.
 3. The installer checks `winget`, installs `AutoHotkey v2` if needed, copies the script into the Zoom folder, and adds startup support.
+4. If Windows hides file extensions, the file may appear as just `install`.
 
 ### How it works
 The script activates the Zoom window and sends built-in Zoom shortcuts:
