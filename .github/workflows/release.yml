@@ -28,6 +28,7 @@ jobs:
             "LICENSE",
             "START.cmd",
             "bootstrap.ps1",
+            "watch-zoom.ps1",
             "uninstall.cmd",
             "uninstall.ps1"
           )
@@ -39,5 +40,5 @@ jobs:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
             Download the ZIP asset, extract it, and run `START.cmd`.
-            The installer will check `winget`, install AutoHotkey v2 if needed, enable startup, and stay in the tray while Zoom is running.
+            The installer will check `winget`, install AutoHotkey v2 if needed, enable the Zoom watcher, start AutoHotkey when Zoom starts, and stop it completely when Zoom closes.
           generate_release_notes: true
