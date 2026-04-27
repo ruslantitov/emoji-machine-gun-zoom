@@ -10,9 +10,9 @@ Windows only.
 5. Дважды нажми файл `START.cmd` в корне папки
 6. Не запускай `START.cmd` прямо из окна ZIP или из временной папки `Temp`
 7. Если Windows скрывает расширения, файл может выглядеть просто как `START`
-8. Программа будет висеть в трее и ждать Zoom
-9. Когда Zoom закроется, программа тоже закроется
-10. На первом запуске программа сама сохранит себя в папку Zoom и включит автозапуск
+8. Установщик сохранит программу в папку Zoom и включит скрытый watcher
+9. Когда Zoom открыт, watcher запускает программу автоматически
+10. Когда Zoom закрывается, watcher полностью останавливает программу, и ее нет даже в трее
 11. Открой Zoom и пользуйся:
    - `F5` - `heart -> thumbs up -> clap`
    - `F6` - `clap`
@@ -28,9 +28,9 @@ Windows only.
 5. Double-click `START.cmd` in the root of the folder
 6. Do not run `START.cmd` from the ZIP preview or a `Temp` folder
 7. If Windows hides file extensions, it may appear as just `START`
-8. The program will stay in the tray and wait for Zoom
-9. When Zoom closes, the program closes too
-10. On first run, the program copies itself into the Zoom folder and enables startup
+8. The installer saves the program into the Zoom folder and enables a hidden watcher
+9. When Zoom is open, the watcher starts the program automatically
+10. When Zoom closes, the watcher fully stops the program so it is no longer present even in the tray
 11. Open Zoom and use the hotkeys:
    - `F5` - `heart -> thumbs up -> clap`
    - `F6` - `clap`

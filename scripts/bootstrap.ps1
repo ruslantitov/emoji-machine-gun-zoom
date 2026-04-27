@@ -1,6 +1,13 @@
 $ErrorActionPreference = "Stop"
 
 $projectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+$zoomBin = Join-Path $env:APPDATA "Zoom\bin"
+$startup = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
+$installedScriptPath = Join-Path $zoomBin "Emoji machine gun (Zoom).ahk"
+$installedWatcherPath = Join-Path $zoomBin "watch-zoom.ps1"
+$startupVbsPath = Join-Path $startup "Emoji machine gun (Zoom) watcher.vbs"
+$legacyStartupCmdPath = Join-Path $startup "Emoji machine gun (Zoom).cmd"
+$legacyInstalledCmdPath = Join-Path $zoomBin "Emoji machine gun (Zoom).cmd"
 
 function Test-Winget {
     $cmd = Get-Command winget -ErrorAction SilentlyContinue
@@ -110,6 +117,63 @@ function Install-AutoHotkeyV2 {
     return $null
 }
 
+function Get-EmojiMachineGunProcess {
+    param(
+        [string]$ScriptPath
+    )
+
+    $escapedPath = [regex]::Escape($ScriptPath)
+    Get-CimInstance Win32_Process -Filter "Name = 'AutoHotkey.exe' OR Name = 'AutoHotkey64.exe' OR Name = 'AutoHotkey32.exe' OR Name = 'AutoHotkeyUX.exe'" |
+        Where-Object { $_.CommandLine -match $escapedPath }
+}
+
+function Get-WatcherProcess {
+    param(
+        [string]$WatcherPath
+    )
+
+    $escapedPath = [regex]::Escape($WatcherPath)
+    Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" |
+        Where-Object { $_.CommandLine -match $escapedPath }
+}
+
+function Install-EmojiMachineGunFiles {
+    New-Item -ItemType Directory -Path $zoomBin -Force | Out-Null
+    Copy-Item (Join-Path $projectRoot "Emoji machine gun (Zoom).ahk") $installedScriptPath -Force
+    Copy-Item (Join-Path $projectRoot "watch-zoom.ps1") $installedWatcherPath -Force
+    Remove-Item $legacyInstalledCmdPath -Force -ErrorAction SilentlyContinue
+}
+
+function Install-WatcherStartup {
+    New-Item -ItemType Directory -Path $startup -Force | Out-Null
+    Remove-Item $legacyStartupCmdPath -Force -ErrorAction SilentlyContinue
+    $command = 'powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "{0}"' -f $installedWatcherPath
+    $vbs = @"
+Set shell = CreateObject("WScript.Shell")
+shell.Run "$command", 0
+"@
+    Set-Content -Path $startupVbsPath -Value $vbs -Encoding ASCII
+}
+
+function Restart-EmojiMachineGunWatcher {
+    $watcherProcesses = @(Get-WatcherProcess -WatcherPath $installedWatcherPath)
+    foreach ($process in $watcherProcesses) {
+        Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
+    }
+
+    $emojiProcesses = @(Get-EmojiMachineGunProcess -ScriptPath $installedScriptPath)
+    foreach ($process in $emojiProcesses) {
+        Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue
+    }
+
+    Start-Process -WindowStyle Hidden -FilePath "powershell.exe" -ArgumentList @(
+        "-NoProfile"
+        "-ExecutionPolicy", "Bypass"
+        "-WindowStyle", "Hidden"
+        "-File", "`"$installedWatcherPath`""
+    )
+}
+
 if (-not (Test-AutoHotkeyV2)) {
     $installedAhkExe = Install-AutoHotkeyV2
 } else {
@@ -125,11 +189,9 @@ if (-not (Test-Path $ahkExe)) {
     throw "AutoHotkey executable was resolved to a missing path: $ahkExe"
 }
 
-$scriptPath = Join-Path $projectRoot "Emoji machine gun (Zoom).ahk"
-Start-Process -FilePath $ahkExe -ArgumentList @($scriptPath)
+Install-EmojiMachineGunFiles
+Install-WatcherStartup
+Restart-EmojiMachineGunWatcher
 
-Add-Type -AssemblyName PresentationFramework
-[System.Windows.MessageBox]::Show(
-    "Emoji machine gun is running. Look for the tray icon, then open Zoom and use F5-F9.",
-    "Emoji machine gun (Zoom)"
-) | Out-Null
+Write-Host "Emoji machine gun watcher is installed."
+Write-Host "AutoHotkey will start only while Zoom is running and will stop when Zoom closes."

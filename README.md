@@ -27,10 +27,10 @@ Quick start:
 1. Скачайте релиз ZIP.
 2. Распакуйте архив целиком в обычную папку.
 3. Запустите `START.cmd` из распакованной папки, не из окна ZIP и не из `Temp`.
-4. Скрипт сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует, затем запустит `.ahk`.
-5. Скрипт остается в трее и ждет Zoom.
-6. Когда Zoom закрывается, скрипт тоже закрывается.
-7. На первом запуске `.ahk` сам скопирует себя в папку Zoom и добавит автозапуск в `Startup`.
+4. Установщик сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует.
+5. Установщик скопирует `.ahk` и скрытый watcher в папку Zoom и добавит watcher в `Startup`.
+6. Когда Zoom запущен, watcher поднимает `AutoHotkey`.
+7. Когда Zoom закрывается, watcher гасит `AutoHotkey`, и его больше нет даже в трее.
 8. Если Windows скрывает расширения, файл может отображаться как просто `START`.
 
 ### Как это работает
@@ -64,10 +64,10 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 1. Download the ZIP release.
 2. Extract the whole archive into a normal folder.
 3. Run `START.cmd` from the extracted folder, not from the ZIP preview and not from `Temp`.
-4. The installer checks `winget`, installs `AutoHotkey v2` if needed, and then launches the `.ahk` file.
-5. The script stays in the tray and waits for Zoom.
-6. When Zoom closes, the script exits too.
-7. On first run, the `.ahk` file copies itself into the Zoom folder and adds startup support.
+4. The installer checks `winget` and installs `AutoHotkey v2` if needed.
+5. The installer copies the `.ahk` script and a hidden watcher into the Zoom folder and adds the watcher to `Startup`.
+6. When Zoom is running, the watcher starts `AutoHotkey`.
+7. When Zoom closes, the watcher stops `AutoHotkey`, so it is no longer present even in the tray.
 8. If Windows hides file extensions, the file may appear as just `START`.
 
 ### How it works
@@ -82,7 +82,8 @@ Zoom docs:
 
 ## Repo
 - `Emoji machine gun (Zoom).ahk` - main script
-- `bootstrap.ps1` - launcher that installs prerequisites and starts the main script
+- `bootstrap.ps1` - installer that installs prerequisites and configures the watcher
+- `watch-zoom.ps1` - hidden watcher that starts/stops AutoHotkey with Zoom
 - `uninstall.ps1` - remove startup and files
 - `START.cmd` - one-click installer
 - `uninstall.cmd` - one-click removal
