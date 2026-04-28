@@ -19,28 +19,36 @@ jobs:
       - name: Build zip
         shell: bash
         run: |
-          mkdir -p dist
-          zip -r "dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip" \
-            "Emoji machine gun (Zoom).ahk" \
-            "README.md" \
-            "QUICK_START.md" \
-            "LICENSE" \
+          rm -rf dist release
+          mkdir -p "release/emoji-machine-gun-zoom-${{ github.ref_name }}/windows" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos" dist
+
+          cp "README.md" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/"
+          cp "QUICK_START.md" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/"
+          cp "LICENSE" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/"
+          cp "RELEASE_CHECKLIST.md" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/"
+
+          cp "Emoji machine gun (Zoom).ahk" \
             "START.cmd" \
             "bootstrap.ps1" \
             "watch-zoom.ps1" \
             "uninstall.cmd" \
             "uninstall.ps1" \
-            "macos/Emoji machine gun (Zoom).app" \
-            "macos/bootstrap.sh" \
+            "release/emoji-machine-gun-zoom-${{ github.ref_name }}/windows/"
+
+          cp "macos/bootstrap.sh" \
             "macos/init.lua" \
             "macos/README.md" \
-            "macos/uninstall.sh"
+            "macos/uninstall.sh" \
+            "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
+          cp -R "macos/Emoji machine gun (Zoom).app" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
+
+          (cd release && zip -r "../dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip" "emoji-machine-gun-zoom-${{ github.ref_name }}")
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
-            Download the ZIP asset, extract it, and run `START.cmd` on Windows or double-click `macos/Emoji machine gun (Zoom).app` on macOS.
+            Download the ZIP asset, extract it, and then open the `windows/` or `macos/` folder inside the extracted root directory.
             The installers will check prerequisites, install what is needed, guide the user through permissions, and start/stop the automation automatically around Zoom.
           generate_release_notes: true

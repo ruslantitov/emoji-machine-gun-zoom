@@ -6,6 +6,7 @@ Quick start:
 - [QUICK_START.md](QUICK_START.md)
 - Release page: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
 - macOS docs: [macos/README.md](macos/README.md)
+- The release ZIP extracts into one root folder with separate `windows/` and `macos/` subfolders.
 
 ## RU
 Минимальный AutoHotkey v2-скрипт для Zoom. Он использует только штатные горячие клавиши Zoom и работает без привязки к координатам экрана.
@@ -102,4 +103,4 @@ It uses Hammerspoon instead of AutoHotkey, but follows the same idea:
 - use only Zoom built-in shortcuts
 - work only while Zoom is running
 - the installer opens the exact macOS permission pages for Accessibility and Input Monitoring automatically
-- the release ZIP includes a double-clickable `Emoji machine gun (Zoom).app` launcher in `macos/`
+- the release ZIP includes a double-clickable `Emoji machine gun (Zoom).app` launcher in the `macos/` subfolder
