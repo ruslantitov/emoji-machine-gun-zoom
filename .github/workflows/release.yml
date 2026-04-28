@@ -10,35 +10,37 @@ permissions:
 
 jobs:
   build-release:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build zip
-        shell: pwsh
+        shell: bash
         run: |
-          New-Item -ItemType Directory -Force -Path dist | Out-Null
-          $zip = "dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip"
-          $files = @(
-            "Emoji machine gun (Zoom).ahk",
-            "README.md",
-            "QUICK_START.md",
-            "LICENSE",
-            "START.cmd",
-            "bootstrap.ps1",
-            "watch-zoom.ps1",
-            "uninstall.cmd",
-            "uninstall.ps1"
-          )
-          Compress-Archive -Path $files -DestinationPath $zip -Force
+          mkdir -p dist
+          zip -r "dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip" \
+            "Emoji machine gun (Zoom).ahk" \
+            "README.md" \
+            "QUICK_START.md" \
+            "LICENSE" \
+            "START.cmd" \
+            "bootstrap.ps1" \
+            "watch-zoom.ps1" \
+            "uninstall.cmd" \
+            "uninstall.ps1" \
+            "macos/Emoji machine gun (Zoom).app" \
+            "macos/bootstrap.sh" \
+            "macos/init.lua" \
+            "macos/README.md" \
+            "macos/uninstall.sh"
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
-            Download the ZIP asset, extract it, and run `START.cmd`.
-            The installer will check `winget`, install AutoHotkey v2 if needed, enable the Zoom watcher, start AutoHotkey when Zoom starts, and stop it completely when Zoom closes.
+            Download the ZIP asset, extract it, and run `START.cmd` on Windows or double-click `macos/Emoji machine gun (Zoom).app` on macOS.
+            The installers will check prerequisites, install what is needed, guide the user through permissions, and start/stop the automation automatically around Zoom.
           generate_release_notes: true

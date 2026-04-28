@@ -1,10 +1,11 @@
 # Emoji machine gun (Zoom)
 
-Windows only.
+Windows and macOS.
 
 Quick start:
 - [QUICK_START.md](QUICK_START.md)
 - Release page: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
+- macOS docs: [macos/README.md](macos/README.md)
 
 ## RU
 Минимальный AutoHotkey v2-скрипт для Zoom. Он использует только штатные горячие клавиши Zoom и работает без привязки к координатам экрана.
@@ -89,5 +90,16 @@ Zoom docs:
 - `uninstall.cmd` - one-click removal
 - `LICENSE` - project license
 - `QUICK_START.md` - minimal install instructions
+- `RELEASE_CHECKLIST.md` - pre-release test checklist
 
 The release ZIP is built automatically by GitHub Actions on tags like `v1.0.0`.
+
+## macOS
+There is also a macOS version in [macos/README.md](macos/README.md).
+It uses Hammerspoon instead of AutoHotkey, but follows the same idea:
+- global `Command + 1` to `5`
+- hold to spam reactions
+- use only Zoom built-in shortcuts
+- work only while Zoom is running
+- the installer opens the exact macOS permission pages for Accessibility and Input Monitoring automatically
+- the release ZIP includes a double-clickable `Emoji machine gun (Zoom).app` launcher in `macos/`
