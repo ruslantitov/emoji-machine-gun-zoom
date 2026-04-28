@@ -194,9 +194,10 @@ function Install-WatcherStartup {
     New-Item -ItemType Directory -Path $startup -Force | Out-Null
     Remove-Item $legacyStartupCmdPath -Force -ErrorAction SilentlyContinue
     $command = 'powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "{0}"' -f $installedWatcherPath
+    $escapedCommand = $command.Replace('"', '""')
     $vbs = @"
 Set shell = CreateObject("WScript.Shell")
-shell.Run "$command", 0
+shell.Run "$escapedCommand", 0
 "@
     Set-Content -Path $startupVbsPath -Value $vbs -Encoding ASCII
 }
