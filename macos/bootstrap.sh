@@ -243,11 +243,21 @@ run_permission_wizard() {
     "Turn on Hammerspoon in Privacy & Security > Input Monitoring, then click Continue."
 }
 
+show_success() {
+  show_dialog \
+    "Emoji machine gun for Zoom" \
+    "Поздравляем с установкой \"Пулемета эмодзи\". Окно Terminal сейчас закроется."
+}
+
+close_terminal_window() {
+  osascript -e 'tell application "Terminal" to close front window' >/dev/null 2>&1 || true
+}
+
 ensure_hammerspoon
 install_files
 install_launch_agent
 restart_hammerspoon
 run_permission_wizard
 
-echo "Emoji machine gun for Zoom is installed on macOS."
-echo "Grant Hammerspoon Accessibility and Input Monitoring access in System Settings if macOS prompts for it."
+show_success
+close_terminal_window
