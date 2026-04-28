@@ -102,5 +102,5 @@ It uses Hammerspoon instead of AutoHotkey, but follows the same idea:
 - hold to spam reactions
 - use only Zoom built-in shortcuts
 - work only while Zoom is running
-- the installer opens the exact macOS permission pages for Accessibility and Input Monitoring automatically
-- the release ZIP includes a double-clickable `Emoji machine gun (Zoom).app` launcher in the `macos/` subfolder
+- the macOS installer checks whether Hammerspoon is already installed, downloads it automatically if needed, and opens the exact macOS permission pages for Accessibility and Input Monitoring
+- the release ZIP includes a double-clickable `INSTALL.command` launcher in the `macos/` subfolder

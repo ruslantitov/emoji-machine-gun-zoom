@@ -40,6 +40,7 @@ jobs:
             "macos/README.md" \
             "macos/uninstall.sh" \
             "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
+          cp -p "macos/INSTALL.command" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
           cp -R "macos/Emoji machine gun (Zoom).app" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
 
           (cd release && zip -r "../dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip" "emoji-machine-gun-zoom-${{ github.ref_name }}")

@@ -30,8 +30,8 @@ This version uses [Hammerspoon](https://www.hammerspoon.org/) to watch Zoom, bin
 ## Install
 
 1. Extract the ZIP and open the `macos/` folder.
-2. Double-click `Emoji machine gun (Zoom).app`.
-3. Follow the installer prompts. It will open the exact macOS pages for Accessibility and Input Monitoring, so you only need to switch Hammerspoon on there.
+2. Double-click `INSTALL.command`.
+3. Follow the installer prompts. It first checks whether Hammerspoon is already installed; if not, it downloads it automatically, then opens the exact macOS pages for Accessibility and Input Monitoring.
 4. Open Zoom and use `Command + 1` to `5`.
 
 If you prefer Terminal, you can still run:
@@ -46,6 +46,7 @@ Notes:
 - It only injects its own marked block into `~/.hammerspoon/init.lua`.
 - Uninstall removes only that block and leaves the rest of the user's Hammerspoon config intact.
 - The installer opens the exact System Settings pages for Accessibility and Input Monitoring automatically.
+- `INSTALL.command` is the recommended double-click entry point on macOS.
 
 ## Lifecycle
 
