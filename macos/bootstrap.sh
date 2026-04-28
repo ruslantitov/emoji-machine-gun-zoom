@@ -92,15 +92,37 @@ EOF
     return 1
   fi
 
+  if [ -d "/Applications" ] && [ -w "/Applications" ]; then
+    rm -rf "/Applications/Hammerspoon.app"
+    cp -R "${app_path}" "/Applications/"
+    xattr -dr com.apple.quarantine "/Applications/Hammerspoon.app" >/dev/null 2>&1 || true
+    if [ -d "/Applications/Hammerspoon.app" ]; then
+      return 0
+    fi
+  fi
+
   mkdir -p "${HOME}/Applications"
   rm -rf "${HOME}/Applications/Hammerspoon.app"
   cp -R "${app_path}" "${HOME}/Applications/"
   xattr -dr com.apple.quarantine "${HOME}/Applications/Hammerspoon.app" >/dev/null 2>&1 || true
+
+  if [ ! -d "${HOME}/Applications/Hammerspoon.app" ]; then
+    echo "Failed to install Hammerspoon.app to either /Applications or ~/Applications."
+    return 1
+  fi
 }
 
 ensure_hammerspoon() {
   if find_hammerspoon_app >/dev/null 2>&1; then
     return
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    if brew install --cask hammerspoon; then
+      if find_hammerspoon_app >/dev/null 2>&1; then
+        return
+      fi
+    fi
   fi
 
   download_hammerspoon

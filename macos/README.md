@@ -33,6 +33,7 @@ This version uses [Hammerspoon](https://www.hammerspoon.org/) to watch Zoom, bin
 2. Double-click `INSTALL.command`.
 3. Follow the installer prompts. It first checks whether Hammerspoon is already installed; if not, it downloads it automatically, then opens the exact macOS pages for Accessibility and Input Monitoring.
 4. Open Zoom and use `Command + 1` to `5`.
+5. If macOS blocks `INSTALL.command` after a browser download, right-click it and choose `Open`. If that still fails, run `xattr -dr com.apple.quarantine ~/Desktop/emoji-machine-gun-zoom-v1.1.11` once in Terminal, then open `INSTALL.command` again.
 
 If you prefer Terminal, you can still run:
 
