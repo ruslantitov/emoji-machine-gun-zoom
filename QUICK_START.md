@@ -1,6 +1,40 @@
 # Quick Start / Быстрый старт
 
-Windows only.
+## macOS RU
+
+1. Открой страницу релиза: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
+2. Скачай файл `emoji-machine-gun-zoom-v1.1.x.zip`
+3. Распакуй ZIP целиком в обычную папку
+4. Открой корневую папку релиза
+5. Для Mac открой папку `macos/`
+6. Открой `README_MAC_INSTALL.txt`
+7. Скопируй команду установки в Terminal и нажми Enter
+8. Не открывай старый `.app` или `.command`-лаунчер, если он есть в старой папке
+9. В открывшихся настройках включи `Hammerspoon` в `Accessibility` и `Input Monitoring`
+10. Открой Zoom и пользуйся:
+   - `Command + 1` - `heart -> thumbs up -> clap`
+   - `Command + 2` - `clap`
+   - `Command + 3` - `thumbs up`
+   - `Command + 4` - `heart`
+   - `Command + 5` - `tada / party`
+
+## macOS EN
+
+1. Open the release page: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest
+2. Download `emoji-machine-gun-zoom-v1.1.x.zip`
+3. Extract the whole ZIP into a normal folder
+4. Open the release root folder
+5. For Mac, open `macos/`
+6. Open `README_MAC_INSTALL.txt`
+7. Copy the install command into Terminal and press Enter
+8. Do not open an old `.app` or `.command` launcher if it is present in an old folder
+9. Enable `Hammerspoon` in `Accessibility` and `Input Monitoring`
+10. Open Zoom and use:
+   - `Command + 1` - `heart -> thumbs up -> clap`
+   - `Command + 2` - `clap`
+   - `Command + 3` - `thumbs up`
+   - `Command + 4` - `heart`
+   - `Command + 5` - `tada / party`
 
 ## RU
 1. Открой страницу релиза: https://github.com/ruslantitov/emoji-machine-gun-zoom/releases/latest

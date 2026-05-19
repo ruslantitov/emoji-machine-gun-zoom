@@ -103,5 +103,6 @@ It uses Hammerspoon instead of AutoHotkey, but follows the same idea:
 - use only Zoom built-in shortcuts
 - work only while Zoom is running
 - the macOS installer checks whether Hammerspoon is already installed, downloads it automatically if needed, and opens the exact macOS permission pages for Accessibility and Input Monitoring
-- the release ZIP includes a double-clickable `INSTALL.command` launcher in the `macos/` subfolder
-- if macOS blocks `INSTALL.command` after download, right-click it and choose `Open`; if needed, remove quarantine once with `xattr -dr com.apple.quarantine ~/Desktop/emoji-machine-gun-zoom-v1.1.11` and try again
+- the release ZIP does not include unsigned `.app` or `.command` launchers, because Gatekeeper can block them before our code runs
+- the recommended macOS install path is the Terminal command in `macos/README_MAC_INSTALL.txt`
+- the command streams `macos/bootstrap.sh` from GitHub, so no downloaded executable file needs to be opened

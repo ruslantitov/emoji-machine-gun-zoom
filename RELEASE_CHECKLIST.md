@@ -23,6 +23,35 @@ The goal is simple:
 
 ## Clean install test
 
+### macOS
+
+1. Prepare a clean test folder:
+   - download or build the ZIP
+   - extract the ZIP into a new empty folder
+
+2. Install from the extracted ZIP:
+   - open `macos/`
+   - open `README_MAC_INSTALL.txt`
+   - copy the install command into Terminal
+   - confirm no unsigned `.app` or `.command` launcher is included in the release
+   - confirm the installer runs from the streamed Terminal command
+
+3. Permissions:
+   - confirm the installer opens Accessibility
+   - enable Hammerspoon
+   - confirm the installer opens Input Monitoring
+   - enable Hammerspoon
+
+4. Runtime verification:
+   - open Zoom
+   - hold `Command + 1` -> mixed reactions work
+   - hold `Command + 2` -> clap works
+   - hold `Command + 3` -> thumbs up works
+   - hold `Command + 4` -> heart works
+   - hold `Command + 5` -> tada works
+
+### Windows
+
 1. Remove the current install:
    - run `uninstall.cmd`
 

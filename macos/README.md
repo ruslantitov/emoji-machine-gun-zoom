@@ -29,25 +29,21 @@ This version uses [Hammerspoon](https://www.hammerspoon.org/) to watch Zoom, bin
 
 ## Install
 
-1. Extract the ZIP and open the `macos/` folder.
-2. Double-click `INSTALL.command`.
-3. Follow the installer prompts. It first checks whether Hammerspoon is already installed; if not, it downloads it automatically, then opens the exact macOS pages for Accessibility and Input Monitoring.
-4. Open Zoom and use `Command + 1` to `5`.
-5. If macOS blocks `INSTALL.command` after a browser download, right-click it and choose `Open`. If that still fails, run `xattr -dr com.apple.quarantine ~/Desktop/emoji-machine-gun-zoom-v1.1.11` once in Terminal, then open `INSTALL.command` again.
-
-If you prefer Terminal, you can still run:
+For the public release ZIP, use the Terminal command from `README_MAC_INSTALL.txt`:
 
 ```bash
-chmod +x bootstrap.sh uninstall.sh
-./bootstrap.sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ruslantitov/emoji-machine-gun-zoom/main/macos/bootstrap.sh)"
 ```
+
+The release ZIP intentionally does not include unsigned `.app` or `.command` launchers. New macOS versions can block those files before our code runs, sometimes with only `Move to Trash` / `Done`.
+
+For local development from a trusted checkout, you can still run `./bootstrap.sh` from this folder.
 
 Notes:
 - The installer does not replace the whole Hammerspoon config anymore.
 - It only injects its own marked block into `~/.hammerspoon/init.lua`.
 - Uninstall removes only that block and leaves the rest of the user's Hammerspoon config intact.
 - The installer opens the exact System Settings pages for Accessibility and Input Monitoring automatically.
-- `INSTALL.command` is the recommended double-click entry point on macOS.
 
 ## Lifecycle
 

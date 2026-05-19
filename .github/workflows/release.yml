@@ -38,10 +38,10 @@ jobs:
           cp "macos/bootstrap.sh" \
             "macos/init.lua" \
             "macos/README.md" \
+            "macos/README_MAC_INSTALL.txt" \
+            "macos/КАК_УСТАНОВИТЬ_НА_MAC.md" \
             "macos/uninstall.sh" \
             "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
-          cp -p "macos/INSTALL.command" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
-          cp -R "macos/Emoji machine gun (Zoom).app" "release/emoji-machine-gun-zoom-${{ github.ref_name }}/macos/"
 
           (cd release && zip -r "../dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip" "emoji-machine-gun-zoom-${{ github.ref_name }}")
 
@@ -51,5 +51,6 @@ jobs:
           files: dist/emoji-machine-gun-zoom-${{ github.ref_name }}.zip
           body: |
             Download the ZIP asset, extract it, and then open the `windows/` or `macos/` folder inside the extracted root directory.
+            On macOS, use the Terminal command from `macos/README_MAC_INSTALL.txt`. Unsigned `.app` and `.command` launchers are not included in the release ZIP because Gatekeeper can block them before our code runs.
             The installers will check prerequisites, install what is needed, guide the user through permissions, and start/stop the automation automatically around Zoom.
           generate_release_notes: true

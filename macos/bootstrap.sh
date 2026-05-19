@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-}")" && pwd)"
+RAW_BASE="${EMG_RAW_BASE:-https://raw.githubusercontent.com/ruslantitov/emoji-machine-gun-zoom/main/macos}"
 if [ -d "${HOME}/.hammerspoon" ] || [ -f "${HOME}/.hammerspoon/init.lua" ]; then
   CONFIG_DIR="${HOME}/.hammerspoon"
 else
@@ -43,25 +44,8 @@ download_hammerspoon() {
 
   curl -fsSL "https://api.github.com/repos/Hammerspoon/hammerspoon/releases/latest" -o "${release_json}"
 
-  read -r release_name release_url <<EOF
-$(python3 - "${release_json}" <<'PY'
-import json
-import sys
-
-with open(sys.argv[1], encoding="utf-8") as fh:
-    data = json.load(fh)
-
-for asset in data.get("assets", []):
-    name = asset.get("name", "")
-    url = asset.get("browser_download_url", "")
-    if name.endswith(".zip") or name.endswith(".dmg"):
-        print(name, url)
-        raise SystemExit(0)
-
-print("")
-PY
-)
-EOF
+  release_url="$(/usr/bin/awk -F '"' '/browser_download_url/ && ($4 ~ /\.(zip|dmg)$/) { print $4; exit }' "${release_json}")"
+  release_name="${release_url##*/}"
 
   if [ -z "${release_url:-}" ]; then
     echo "Could not find a downloadable Hammerspoon release archive."
@@ -113,6 +97,10 @@ EOF
 }
 
 ensure_hammerspoon() {
+  if [ "${EMG_SKIP_HAMMERSPOON:-0}" = "1" ]; then
+    return
+  fi
+
   if find_hammerspoon_app >/dev/null 2>&1; then
     return
   fi
@@ -159,9 +147,26 @@ wait_for_accessibility() {
   return 1
 }
 
+get_init_source() {
+  local local_init downloaded_init
+  local_init="${SCRIPT_DIR}/init.lua"
+
+  if [ -f "${local_init}" ]; then
+    printf '%s\n' "${local_init}"
+    return 0
+  fi
+
+  downloaded_init="$(mktemp)"
+  curl -fsSL "${RAW_BASE}/init.lua" -o "${downloaded_init}"
+  printf '%s\n' "${downloaded_init}"
+}
+
 install_files() {
+  local init_source
+  init_source="$(get_init_source)"
+
   mkdir -p "${INSTALL_DIR}"
-  cp "${SCRIPT_DIR}/init.lua" "${INSTALL_DIR}/init.lua"
+  cp "${init_source}" "${INSTALL_DIR}/init.lua"
 
   mkdir -p "${CONFIG_DIR}"
   if [ ! -f "${INIT_PATH}" ]; then
@@ -189,6 +194,10 @@ EOF
 }
 
 install_launch_agent() {
+  if [ "${EMG_SKIP_LAUNCH_AGENT:-0}" = "1" ]; then
+    return
+  fi
+
   mkdir -p "${LAUNCH_AGENTS_DIR}"
   cat > "${PLIST_PATH}" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -216,6 +225,10 @@ EOF
 }
 
 restart_hammerspoon() {
+  if [ "${EMG_SKIP_RESTART:-0}" = "1" ]; then
+    return
+  fi
+
   osascript -e 'tell application "Hammerspoon" to quit' >/dev/null 2>&1 || true
   local app_path
   if app_path="$(find_hammerspoon_app)"; then
@@ -226,30 +239,42 @@ restart_hammerspoon() {
 }
 
 run_permission_wizard() {
+  if [ "${EMG_SKIP_PERMISSION_WIZARD:-0}" = "1" ]; then
+    return
+  fi
+
   show_dialog \
-    "Emoji machine gun for Zoom" \
-    "macOS needs two permissions for Hammerspoon: Accessibility and Input Monitoring. The installer will open the exact System Settings pages for you. Turn on Hammerspoon in each page, then come back here and click Continue."
+    "Пулемет эмодзи для Zoom" \
+    "macOS нужно два разрешения для Hammerspoon: Accessibility и Input Monitoring. Установщик откроет нужные страницы настроек. Включите Hammerspoon на каждой странице, потом вернитесь сюда и нажмите Continue."
 
   open_privacy_pane "Privacy_Accessibility"
   show_dialog \
-    "Enable Accessibility" \
-    "Turn on Hammerspoon in Privacy & Security > Accessibility, then click Continue."
+    "Шаг 1 из 2" \
+    "Включите Hammerspoon в Privacy & Security > Accessibility, потом нажмите Continue."
 
   wait_for_accessibility || true
 
   open_privacy_pane "Privacy_ListenEvent"
   show_dialog \
-    "Enable Input Monitoring" \
-    "Turn on Hammerspoon in Privacy & Security > Input Monitoring, then click Continue."
+    "Шаг 2 из 2" \
+    "Включите Hammerspoon в Privacy & Security > Input Monitoring, потом нажмите Continue."
 }
 
 show_success() {
+  if [ "${EMG_SKIP_SUCCESS_DIALOG:-0}" = "1" ]; then
+    return
+  fi
+
   show_dialog \
     "Emoji machine gun for Zoom" \
     "Поздравляем с установкой \"Пулемета эмодзи\". Окно Terminal сейчас закроется."
 }
 
 close_terminal_window() {
+  if [ "${EMG_SKIP_CLOSE_TERMINAL:-0}" = "1" ]; then
+    return
+  fi
+
   osascript -e 'tell application "Terminal" to close front window' >/dev/null 2>&1 || true
 }
 
