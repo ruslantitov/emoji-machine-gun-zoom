@@ -45,7 +45,7 @@
 6. Дважды нажми файл `START.cmd` внутри `windows/`
 7. Не запускай `START.cmd` прямо из окна ZIP или из временной папки `Temp`
 8. Если Windows скрывает расширения, файл может выглядеть просто как `START`
-9. Установщик сохранит программу в папку Zoom и включит скрытый watcher
+9. Установщик сохранит программу в `%APPDATA%\Emoji machine gun (Zoom)` и включит скрытый watcher
 10. Когда Zoom открыт, watcher запускает программу автоматически
 11. Когда Zoom закрывается, watcher полностью останавливает программу, и ее нет даже в трее
 12. Открой Zoom и пользуйся:
@@ -64,7 +64,7 @@
 6. Double-click `START.cmd` inside `windows/`
 7. Do not run `START.cmd` from the ZIP preview or a `Temp` folder
 8. If Windows hides file extensions, it may appear as just `START`
-9. The installer saves the program into the Zoom folder and enables a hidden watcher
+9. The installer saves the program into `%APPDATA%\Emoji machine gun (Zoom)` and enables a hidden watcher
 10. When Zoom is open, the watcher starts the program automatically
 11. When Zoom closes, the watcher fully stops the program so it is no longer present even in the tray
 12. Open Zoom and use the hotkeys:

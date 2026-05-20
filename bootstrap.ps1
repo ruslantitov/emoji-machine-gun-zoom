@@ -1,10 +1,11 @@
 $ErrorActionPreference = "Stop"
 
 $projectRoot = $PSScriptRoot
+$appRoot = Join-Path $env:APPDATA "Emoji machine gun (Zoom)"
 $zoomBin = Join-Path $env:APPDATA "Zoom\bin"
 $startup = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
-$installedScriptPath = Join-Path $zoomBin "Emoji machine gun (Zoom).ahk"
-$installedWatcherPath = Join-Path $zoomBin "watch-zoom.ps1"
+$installedScriptPath = Join-Path $appRoot "Emoji machine gun (Zoom).ahk"
+$installedWatcherPath = Join-Path $appRoot "watch-zoom.ps1"
 $startupVbsPath = Join-Path $startup "Emoji machine gun (Zoom) watcher.vbs"
 $legacyStartupCmdPath = Join-Path $startup "Emoji machine gun (Zoom).cmd"
 $legacyInstalledCmdPath = Join-Path $zoomBin "Emoji machine gun (Zoom).cmd"
@@ -184,10 +185,12 @@ function Get-WatcherProcess {
 }
 
 function Install-EmojiMachineGunFiles {
-    New-Item -ItemType Directory -Path $zoomBin -Force | Out-Null
+    New-Item -ItemType Directory -Path $appRoot -Force | Out-Null
     Copy-Item (Join-Path $projectRoot "Emoji machine gun (Zoom).ahk") $installedScriptPath -Force
     Copy-Item (Join-Path $projectRoot "watch-zoom.ps1") $installedWatcherPath -Force
     Remove-Item $legacyInstalledCmdPath -Force -ErrorAction SilentlyContinue
+    Remove-Item (Join-Path $zoomBin "Emoji machine gun (Zoom).ahk") -Force -ErrorAction SilentlyContinue
+    Remove-Item (Join-Path $zoomBin "watch-zoom.ps1") -Force -ErrorAction SilentlyContinue
 }
 
 function Install-WatcherStartup {

@@ -30,7 +30,7 @@ Quick start:
 2. Распакуйте архив целиком в обычную папку.
 3. Запустите `START.cmd` из распакованной папки, не из окна ZIP и не из `Temp`.
 4. Установщик сначала проверит `winget`, потом поставит `AutoHotkey v2`, если он отсутствует.
-5. Установщик скопирует `.ahk` и скрытый watcher в папку Zoom и добавит watcher в `Startup`.
+5. Установщик скопирует `.ahk` и скрытый watcher в `%APPDATA%\Emoji machine gun (Zoom)` и добавит watcher в `Startup`.
 6. Когда Zoom запущен, watcher поднимает `AutoHotkey`.
 7. Когда Zoom закрывается, watcher гасит `AutoHotkey`, и его больше нет даже в трее.
 8. Если Windows скрывает расширения, файл может отображаться как просто `START`.
@@ -67,7 +67,7 @@ Minimal AutoHotkey v2 script for Zoom. It uses only Zoom built-in hotkeys and do
 2. Extract the whole archive into a normal folder.
 3. Run `START.cmd` from the extracted folder, not from the ZIP preview and not from `Temp`.
 4. The installer checks `winget` and installs `AutoHotkey v2` if needed.
-5. The installer copies the `.ahk` script and a hidden watcher into the Zoom folder and adds the watcher to `Startup`.
+5. The installer copies the `.ahk` script and a hidden watcher into `%APPDATA%\Emoji machine gun (Zoom)` and adds the watcher to `Startup`.
 6. When Zoom is running, the watcher starts `AutoHotkey`.
 7. When Zoom closes, the watcher stops `AutoHotkey`, so it is no longer present even in the tray.
 8. If Windows hides file extensions, the file may appear as just `START`.
