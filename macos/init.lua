@@ -1,4 +1,8 @@
 hs.hotkey.alertDuration = 0.5
+pcall(function()
+  hs.ipc.cliInstall()
+end)
+hs.allowAppleScript(true)
 
 local zoomBundleIds = {
   ["us.zoom.xos"] = true,
@@ -87,7 +91,7 @@ local function sendZoomReaction(reactionName)
     return false
   end
 
-  hs.eventtap.keyStroke(shortcut.mods, shortcut.key, 20000, app)
+  hs.eventtap.keyStroke(shortcut.mods, shortcut.key, 20000)
   return true
 end
 
@@ -113,6 +117,11 @@ local function startReaction(keyName, reactionName)
   if reactionTimer then
     reactionTimer:stop()
     reactionTimer = nil
+  end
+
+  if not sendZoomReaction(reactionName) then
+    stopReaction(keyName)
+    return
   end
 
   reactionTimer = hs.timer.doEvery(fireDelaySeconds, function()
@@ -175,3 +184,14 @@ hs.hotkey.bind(activationHotkeys.clap.mods, activationHotkeys.clap.key, function
 hs.hotkey.bind(activationHotkeys.thumbs.mods, activationHotkeys.thumbs.key, function() startReaction("thumbs", "thumbs") end, function() stopReaction("thumbs") end)
 hs.hotkey.bind(activationHotkeys.heart.mods, activationHotkeys.heart.key, function() startReaction("heart", "heart") end, function() stopReaction("heart") end)
 hs.hotkey.bind(activationHotkeys.tada.mods, activationHotkeys.tada.key, function() startReaction("tada", "tada") end, function() stopReaction("tada") end)
+
+EmojiMachineGunZoom = {
+  status = function()
+    return {
+      zoomRunning = isZoomRunning(),
+      activeKey = activeKey,
+      activeReaction = activeReaction,
+      zoomSeen = zoomSeen,
+    }
+  end,
+}

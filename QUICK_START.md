@@ -11,7 +11,7 @@
 7. Скопируй команду установки в Terminal и нажми Enter
 8. Не открывай старый `.app` или `.command`-лаунчер, если он есть в старой папке
 9. В открывшихся настройках включи `Hammerspoon` в `Accessibility` и `Input Monitoring`
-10. Открой Zoom и пользуйся:
+10. Войди именно в Zoom-встречу и нажимай или удерживай:
    - `Command + 1` - `heart -> thumbs up -> clap`
    - `Command + 2` - `clap`
    - `Command + 3` - `thumbs up`
@@ -29,7 +29,7 @@
 7. Copy the install command into Terminal and press Enter
 8. Do not open an old `.app` or `.command` launcher if it is present in an old folder
 9. Enable `Hammerspoon` in `Accessibility` and `Input Monitoring`
-10. Open Zoom and use:
+10. Join an active Zoom meeting and press once or hold:
    - `Command + 1` - `heart -> thumbs up -> clap`
    - `Command + 2` - `clap`
    - `Command + 3` - `thumbs up`

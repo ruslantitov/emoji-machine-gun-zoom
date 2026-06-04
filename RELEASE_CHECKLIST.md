@@ -43,12 +43,12 @@ The goal is simple:
    - enable Hammerspoon
 
 4. Runtime verification:
-   - open Zoom
-   - hold `Command + 1` -> mixed reactions work
-   - hold `Command + 2` -> clap works
-   - hold `Command + 3` -> thumbs up works
-   - hold `Command + 4` -> heart works
-   - hold `Command + 5` -> tada works
+   - join an active Zoom meeting
+   - press once and hold `Command + 1` -> mixed reactions work
+   - press once and hold `Command + 2` -> clap works
+   - press once and hold `Command + 3` -> thumbs up works
+   - press once and hold `Command + 4` -> heart works
+   - press once and hold `Command + 5` -> tada works
 
 ### Windows
 

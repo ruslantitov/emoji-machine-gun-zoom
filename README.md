@@ -99,9 +99,10 @@ The release ZIP is built automatically by GitHub Actions on tags like `v1.0.0`.
 There is also a macOS version in [macos/README.md](macos/README.md).
 It uses Hammerspoon instead of AutoHotkey, but follows the same idea:
 - global `Command + 1` to `5`
-- hold to spam reactions
+- press once or hold to spam reactions
 - use only Zoom built-in shortcuts
 - work only while Zoom is running
+- reactions appear only inside an active Zoom meeting
 - the macOS installer checks whether Hammerspoon is already installed, downloads it automatically if needed, and opens the exact macOS permission pages for Accessibility and Input Monitoring
 - the release ZIP does not include unsigned `.app` or `.command` launchers, because Gatekeeper can block them before our code runs
 - the recommended macOS install path is the Terminal command in `macos/README_MAC_INSTALL.txt`

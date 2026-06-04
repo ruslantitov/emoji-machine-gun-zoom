@@ -27,10 +27,12 @@ README_MAC_INSTALL.txt
 - `Accessibility`
 - `Input Monitoring`
 
-Потом откройте Zoom и удерживайте:
+Потом войдите именно в Zoom-встречу и нажмите или удерживайте:
 
 - `Command + 1` - микс реакций
 - `Command + 2` - clap
 - `Command + 3` - thumbs up
 - `Command + 4` - heart
 - `Command + 5` - tada / party
+
+Если открыт только главный экран Zoom, реакции не появятся. Нужна активная встреча.

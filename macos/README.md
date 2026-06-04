@@ -6,11 +6,13 @@ This version uses [Hammerspoon](https://www.hammerspoon.org/) to watch Zoom, bin
 
 ## What it does
 
-- `Command + 1` - hold to spam a mixed stream of `heart -> thumbs up -> clap`
-- `Command + 2` - hold to spam `clap`
-- `Command + 3` - hold to spam `thumbs up`
-- `Command + 4` - hold to spam `heart`
-- `Command + 5` - hold to spam `tada / party`
+- `Command + 1` - press once or hold to spam a mixed stream of `heart -> thumbs up -> clap`
+- `Command + 2` - press once or hold to spam `clap`
+- `Command + 3` - press once or hold to spam `thumbs up`
+- `Command + 4` - press once or hold to spam `heart`
+- `Command + 5` - press once or hold to spam `tada / party`
+
+Zoom must be inside an active meeting. If only the Zoom home window is open, reactions have nowhere to appear.
 
 ## Requirements
 
@@ -44,11 +46,13 @@ Notes:
 - It only injects its own marked block into `~/.hammerspoon/init.lua`.
 - Uninstall removes only that block and leaves the rest of the user's Hammerspoon config intact.
 - The installer opens the exact System Settings pages for Accessibility and Input Monitoring automatically.
+- If permissions look enabled but hotkeys do nothing, remove and add Hammerspoon again in both privacy panes.
 
 ## Lifecycle
 
 - The script is loaded by Hammerspoon at login.
 - It only sends reactions while Zoom is running.
+- The first reaction is sent immediately on key press; holding the key repeats it.
 - If Zoom closes, the reaction loop stops immediately.
 - Reopening Zoom works in the same macOS session without reinstalling anything.
 
