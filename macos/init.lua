@@ -225,7 +225,7 @@ local function handleActivationEvent(event)
   end
 
   if eventType == hs.eventtap.event.types.keyDown then
-    if flags.cmd and not flags.alt and not flags.ctrl then
+    if flags.cmd and not flags.shift and not flags.alt and not flags.ctrl then
       lastInputAt = os.date("%Y-%m-%d %H:%M:%S")
       lastInputKey = mapping.keyName
       pressedActivationKeys[mapping.keyName] = true
